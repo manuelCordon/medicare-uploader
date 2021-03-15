@@ -1,18 +1,19 @@
-from sunfire import session
-from sunfire import plans as sf_plans
-from processor import plans as p_plans
-from aws import cloudsearch
-
-
+import processor as p_plans
+import cloudsearch
 
 
 def generate_index(domain_name='medicare-enroll'):
 
-    from data import index
-    print(cloudsearch.define_index(domain_name, index.fields_definition()))
+    from data import fields_definition
+    print(cloudsearch.define_index(domain_name, fields_definition))
 
 
+def main():
+    if __name__ == '__main__':
+        generate_index()
 
+# authorization_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InN1bmZpcmVxYWFwaSIsInBhc3N3b3JkIjoiM mhFRHRtdXdaM0dmREY2cSIsInBhcnRuZXJJZCI6IlNGUUEwMSIsIndlYlNlcnZpY2VJZCI6IkIzRUFDODgxLUQ3 MjMtNDIwMy05NUEyLTBBQ0I3NjFBODEyMyIsImFjY2Vzc0xldmVsIjozMSwiY2xpZW50UGFydG5lcklkIjoiZX lKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6STFOaUo5LmV5SmpiR2xsYm5SUVlYSjBibVZ5U1dRaU9q RXdNVEkwTWl3aWFXRjBJam94TmpFeU9EZzBOVFUxZlEuVUNKRkdSZEQ5QUR2aUZJN1NEdEJRVENQNm9 zbFFxTXBZRE1kRG5DcTdfUSIsImlhdCI6MTYxMjg4NDU1NSwiZXhwIjoxNjE1NDc2NTU1fQ.ziBhC2p5y_tU13 9cod_SQ09J1s8jyUsF9bVA6521DmY'
+#
 cloudsearch_doc_url = 'https://doc-medicare-enroll-uzi4tt2utn7zbf6csvny6ovf3e.us-east-1.cloudsearch.amazonaws.com'
 
 # customer_code = session.start_session(authorization_token)

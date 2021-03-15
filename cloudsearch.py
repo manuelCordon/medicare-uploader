@@ -6,9 +6,9 @@ from functional import seq
 def define_index(domain_name, fields):
     client = boto3.client('cloudsearch')
 
-    # use for instead of lambda
     # use aioboto3 instead of boto3
-    seq(fields).for_each(lambda f: __define_index_field(client, domain_name, f))
+    for field in fields:
+        __define_index_field(client, domain_name, field)
 
     print("Requesting document index")
     return client.index_documents(

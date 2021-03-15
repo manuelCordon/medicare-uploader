@@ -1,6 +1,4 @@
-# make it a constsant
-def fields_definition():
-    return [
+fields_definition = [
         {
             'IndexFieldName': 'state',
             'IndexFieldType': 'literal',

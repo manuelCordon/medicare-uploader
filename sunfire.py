@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import requests
 
 
@@ -29,3 +31,16 @@ def start_session(authorization_token):
     response = requests.request("POST", url, headers=headers, data=payload)
 
     return response.json()["customerCode"]
+
+
+def get_plans(customer_code, authorization_token):
+    url = "http://www.sunfirematrix.com/v2/plans/profile/%s/%d" % (customer_code, datetime.now().year)
+
+    headers = {
+        'accept': 'application/json',
+        'authorization': authorization_token
+    }
+
+    response = requests.request("GET", url, headers=headers)
+
+    return response.json()

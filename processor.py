@@ -9,31 +9,11 @@ def __get_generic(plans, key):
         .to_dict()
 
 
-def get_carriers(plans):
-    return __get_generic(plans, 'carrier')
-
-
-def get_premium_ranges(plans):
-    return __get_generic(plans, 'premium')
-
-
-def get_appointments(plans):
-    return __get_generic(plans, 'appointed')
-
-
-def get_policy_types(plans):
-    return __get_generic(plans, 'policyType')
-
-
-def get_ncs(plans):
-    return __get_generic(plans, 'nc')
-
-
-def yes_no(param):
+def __yes_no(param):
     return param.lower().startswith('y')
 
 
-def pharmacy_preference(param):
+def __pharmacy_preference(param):
     pharmacy_preferences = {
         -1: 'NA',
         0: 'out',
@@ -45,7 +25,7 @@ def pharmacy_preference(param):
     return pharmacy_preferences.get(param)
 
 
-def format_plan(plan, premium_ranges, appointments, policy_types, ncs):
+def __format_plan(plan, premium_ranges, appointments, policy_types, ncs):
     output = {
         'state': plan['stateAbbr'],
         'plan_id': plan['id'],
@@ -54,7 +34,7 @@ def format_plan(plan, premium_ranges, appointments, policy_types, ncs):
         'premium': plan['premium'],
         'deductible': plan['deductible'],
         'type': plan['type'],
-        'has_preferred_pharmacies': pharmacy_preference(plan['hasPreferredPharmacies']),
+        'has_preferred_pharmacies': __pharmacy_preference(plan['hasPreferredPharmacies']),
         'low_performer': plan['lowPerformer'],
         'pharmacy_network_status': plan['pharmacyNetworkStatus'],
         'brand': plan['brand'],
@@ -65,10 +45,10 @@ def format_plan(plan, premium_ranges, appointments, policy_types, ncs):
         'combined_max_out_of_pocket': plan['combMoop'],
         'max_out_of_pocket': plan['moop'],
         'part_b_reimbursement': plan['partBReimbursement'],
-        'accepts_mail_order': yes_no(plan['acceptsMailOrder']),
-        'has_dental': yes_no(plan['hasDental']),
-        'has_vision': yes_no(plan['hasVision']),
-        'has_hearing': yes_no(plan['hasHearing']),
+        'accepts_mail_order': __yes_no(plan['acceptsMailOrder']),
+        'has_dental': __yes_no(plan['hasDental']),
+        'has_vision': __yes_no(plan['hasVision']),
+        'has_hearing': __yes_no(plan['hasHearing']),
         'coverage_type': plan['coverageType'],
         'annual_cost': plan['annualCost'],
         'drug_cost': plan['drugCost'],
@@ -97,11 +77,11 @@ def format_plan(plan, premium_ranges, appointments, policy_types, ncs):
 
 
 def build_plans(plans):
-    premium_ranges = get_premium_ranges(plans)
-    appointments = get_appointments(plans)
-    policy_types = get_policy_types(plans)
-    ncs = get_ncs(plans)
+    premium_ranges = __get_generic(plans, 'premium')
+    appointments = __get_generic(plans, 'appointed')
+    policy_types = __get_generic(plans, 'policyType')
+    ncs = __get_generic(plans, 'nc')
 
     return seq(plans['plans']) \
-        .map(lambda p: format_plan(p, premium_ranges, appointments, policy_types, ncs)) \
+        .map(lambda p: __format_plan(p, premium_ranges, appointments, policy_types, ncs)) \
         .to_list()
